@@ -23,7 +23,7 @@ CREATE TABLE events (
 
 CREATE TABLE event_participants (
     event_participant_id INT PRIMARY KEY,
-    added_date DATE NOT NULL,
+    added_date DATE,
     event_id INT,
     player_id INT,
     FOREIGN KEY (event_id) REFERENCES events(event_id),
@@ -50,6 +50,7 @@ BEGIN
 END
 $$
 
+
 CREATE PROCEDURE add_participant_to_event(IN event_id INT, IN player_id INT)
 BEGIN
    INSERT INTO event_participants(event_id, player_id)
@@ -63,7 +64,6 @@ CREATE TRIGGER set_added_date
 BEFORE INSERT ON event_participants
 FOR EACH ROW
 SET NEW.added_date = CURRENT_DATE;
-
 
 CREATE VIEW event_details AS
 SELECT 
