@@ -1,19 +1,34 @@
-CREATE TABLE `persons` (
-  `id` int unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(200) NOT NULL DEFAULT '',
-  `age` int NOT NULL,
-  `occupation` varchar(200) DEFAULT NULL,
-  `email` varchar(200) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB;
+CREATE TABLE games (
+    game_id INT PRIMARY KEY,
+    title VARCHAR(255) NOT NULL,
+    coverUrl VARCHAR(255),
+    description VARCHAR(255)
+);
 
-CREATE TABLE `users` (
-  `id` int unsigned NOT NULL AUTO_INCREMENT,
-  `person_id` int NOT NULL,
-  `username` varchar(200) NOT NULL DEFAULT '',
-  `password` varchar(200) NOT NULL DEFAULT '',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB;
+CREATE TABLE players (
+    player_id INT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    total_wins INT
+);
+
+CREATE TABLE events (
+    event_id INT PRIMARY KEY,
+    start_date DATE NOT NULL,
+    end_date DATE,
+    game_id INT,
+    winner_id INT,
+    FOREIGN KEY (game_id) REFERENCES games(game_id),
+    FOREIGN KEY (winner_id) REFERENCES players(player_id)
+);
+
+CREATE TABLE event_participants (
+    event_participant_id INT PRIMARY KEY,
+    added_date DATE NOT NULL,
+    event_id INT,
+    player_id INT,
+    FOREIGN KEY (event_id) REFERENCES events(event_id),
+    FOREIGN KEY (player_id) REFERENCES players(player_id)
+);
 
 CREATE VIEW get_users AS
 SELECT
