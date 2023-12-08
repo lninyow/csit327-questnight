@@ -1,24 +1,53 @@
-Installation Instructions
+# QuestNight API
 
-1. Make sure you install python 3.0 and above
+Members:
 
-2. Create a project environment, run PowerShell:
-> mkdir myproject
-> cd myproject
-> py -3 -m venv .venv
+- Baclayon, Leonel - [carefreebee](https://github.com/carefreebee)
+- Sagmon, Liden - [lninyow](https://github.com/lninyow)
+- Tampus, Nathaniel - [dotnize](https://github.com/dotnize)
 
-3. Activate the environment:
-> .venv\Scripts\activate
+## Setup
 
-4. Install flask
-> pip install Flask
+1. Create a virtual environment:
 
-5. Install mysqldb:
-> pip install flask-mysqldb
+```sh
+python -m venv .venv
+```
 
-6. Install dotenv:
-> pip install python-dotenv
+2. Activate the virtual environment
 
+for bash/zsh:
 
-To run flask, execute this command:
-> flask --app main run --debug
+```sh
+source .venv/bin/activate
+```
+
+for windows powershell:
+
+```sh
+.venv\Scripts\activate
+```
+
+3. Install dependencies:
+
+```
+pip install -r requirements.txt
+```
+
+4. Create a `.env` file and with the following template:
+
+```sh
+MYSQL_HOST=localhost
+MYSQL_PORT=3306
+MYSQL_USER=root
+MYSQL_PASSWORD=
+MYSQL_DB=questnight
+MYSQL_CURSORCLASS=DictCursor
+MYSQL_AUTOCOMMIT=true
+```
+
+### Running the Flask app
+
+```sh
+flask --app main run --debug
+```
