@@ -30,62 +30,55 @@ CREATE TABLE event_participants (
     FOREIGN KEY (player_id) REFERENCES players(player_id)
 );
 
-CREATE VIEW get_users AS
-SELECT
-  p.name,
-  p.age,
-  p.occupation,
-  p.email,
-  u.id,
-  u.username,
-  u.password
-FROM persons p
-INNER JOIN users u ON u.person_id = p.id;
-
-DELIMITER $$
-CREATE PROCEDURE create_user(
-  IN p_name varchar(200),
-  IN p_age int,
-  IN p_occupation varchar(200),
-  IN p_email varchar(200),
-  IN p_username varchar(200),
-  IN p_password varchar(200)
-)
+CREATE PROCEDURE add_participant_to_event(IN event_id INT, IN player_id INT)
 BEGIN
-  DECLARE v_person_id int;
-  INSERT INTO persons(name, age, occupation, email) VALUES(p_name, p_age, p_occupation, p_email);
-  SET v_person_id = LAST_INSERT_ID();
-  INSERT INTO users(person_id, username, password) VALUES(v_person_id, p_username, p_password);
-  SELECT LAST_INSERT_ID() AS id;
-END$$
-DELIMITER ;
+   INSERT INTO event_participants(event_id, player_id)
+   VALUES (event_id, player_id);
+END;
 
-DELIMITER $$
-CREATE PROCEDURE update_user(
-  IN user_id int,
-  IN p_name varchar(200),
-  IN p_age int,
-  IN p_occupation varchar(200),
-  IN p_email varchar(200),
-  IN p_username varchar(200),
-  IN p_password varchar(200)
-)
-BEGIN
-  UPDATE persons
-  INNER JOIN users ON users.person_id = persons.id
-  SET name = p_name, age = p_age, occupation = p_occupation, email = p_email
-  WHERE users.id = user_id;
-  UPDATE users SET username = p_username, password = p_password
-  WHERE id = user_id;
-  SELECT user_id AS id;
-END$$
-DELIMITER ;
+CREATE TRIGGER set_added_date
+BEFORE INSERT ON event_participants
+FOR EACH ROW
+SET NEW.added_date = CURRENT_DATE;
 
-DELIMITER $$
-CREATE PROCEDURE delete_user(IN user_id int)
+
+
+CREATE VIEW event_details AS
+SELECT 
+    e.event_id,
+    g.title AS game_title,
+    p.name AS winner_name
+FROM 
+    events e
+JOIN 
+    games g ON e.game_id = g.game_id
+LEFT JOIN 
+    players p ON e.winner_id = p.player_id;
+
+CREATE VIEW event_participants_view AS
+SELECT 
+    ep.event_id,
+    p.name AS participant_name
+FROM 
+    event_participants ep
+JOIN 
+    players p ON ep.player_id = p.player_id;
+
+SELECT 
+    ed.event_id,
+    ed.game_title,
+    ed.winner_name,
+    ep.participant_name
+FROM 
+    event_details ed
+JOIN 
+    event_participants_view ep ON ed.event_id = ep.event_id;
+
+CREATE TRIGGER update_winner_wins
+AFTER UPDATE OF winner_id ON events
+FOR EACH ROW
 BEGIN
-  DELETE FROM persons WHERE id = (SELECT person_id FROM users WHERE id = user_id);
-  DELETE FROM users WHERE id = user_id;
-  SELECT user_id AS id;
-END$$
-DELIMITER ;
+   UPDATE players
+   SET total_wins = total_wins + 1
+   WHERE player_id = NEW.winner_id;
+END;
