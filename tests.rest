@@ -1,42 +1,93 @@
 @host=http://127.0.0.1:5000
 
-
-### Create an item
-POST {{host}}/users
+# PLAYERS TABLE
+### Create a player
+POST {{host}}/players
 Content-Type: application/json
 
 {
   "name": "John Doe",
-  "age": 30,
-  "occupation": "Software Engineer",
-  "email": "john@doe.com",
-  "password": "123456"
+  "total_wins": 3
 }
 
+### Read all players
+GET {{host}}/players
 
-### Read all items
-GET {{host}}/users
-Content-Type: application/json
+### Read a player by ID
+GET {{host}}/players/1
 
-
-### Read single item by id
-GET {{host}}/users/11
-Content-Type: application/json
-
-
-### Update an item
-PUT {{host}}/users/11
+### Update a player
+PUT {{host}}/players/1
 Content-Type: application/json
 
 {
-  "name": "Jane Doe",
-  "age": 25,
-  "occupation": "Business Analyst",
-  "email": "jane.doe@gmail.com",
-  "password": "abc123"
+  "name": "John Doe",
+  "total_wins": 4
 }
 
+### Delete a player
+DELETE {{host}}/players/1
 
-### Delete an item
-DELETE {{host}}/users/11
+
+# GAMES TABLE
+### Create a game
+POST {{host}}/games
 Content-Type: application/json
+
+{
+  "title": "Chess",
+  "coverUrl": "chess_cover.jpg",
+  "description": "A classic strategy game."
+}
+
+### Read all games
+GET {{host}}/games
+
+### Read a game by ID
+GET {{host}}/games/1
+
+### Update a game
+PUT {{host}}/games/1
+Content-Type: application/json
+
+{
+  "title": "Chess",
+  "coverUrl": "new_chess_cover.jpg",
+  "description": "A classic strategy game."
+}
+
+### Delete a game
+DELETE {{host}}/games/1
+
+
+# EVENTS TABLE
+### Create an event
+POST {{host}}/events
+Content-Type: application/json
+
+{
+  "start_date": "2023-01-01",
+  "end_date": "2023-01-05",
+  "game_id": 1,
+  "winner_id": 1
+}
+
+### Read all events
+GET {{host}}/events
+
+### Read an event by ID
+GET {{host}}/events/1
+
+### Update an event
+PUT {{host}}/events/1
+Content-Type: application/json
+
+{
+  "start_date": "2023-01-01",
+  "end_date": "2023-01-10",
+  "game_id": 1,
+  "winner_id": 2
+}
+
+### Delete an event
+DELETE {{host}}/events/1
