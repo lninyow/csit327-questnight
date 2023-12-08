@@ -30,17 +30,39 @@ CREATE TABLE event_participants (
     FOREIGN KEY (player_id) REFERENCES players(player_id)
 );
 
+DELIMITER $$
+CREATE PROCEDURE add_game_to_event(IN event_id INT, IN game_id INT)
+BEGIN
+   UPDATE events
+   SET game_id = game_id
+   WHERE event_id = event_id;
+END
+$$
+
+
+CREATE TRIGGER update_winner_wins
+AFTER UPDATE OF winner_id ON events
+FOR EACH ROW
+BEGIN
+   UPDATE players
+   SET total_wins = total_wins + 1
+   WHERE player_id = NEW.winner_id;
+END
+$$
+
 CREATE PROCEDURE add_participant_to_event(IN event_id INT, IN player_id INT)
 BEGIN
    INSERT INTO event_participants(event_id, player_id)
    VALUES (event_id, player_id);
-END;
+END
+$$
+
+DELIMITER ;
 
 CREATE TRIGGER set_added_date
 BEFORE INSERT ON event_participants
 FOR EACH ROW
 SET NEW.added_date = CURRENT_DATE;
-
 
 
 CREATE VIEW event_details AS
@@ -74,11 +96,4 @@ FROM
 JOIN 
     event_participants_view ep ON ed.event_id = ep.event_id;
 
-CREATE TRIGGER update_winner_wins
-AFTER UPDATE OF winner_id ON events
-FOR EACH ROW
-BEGIN
-   UPDATE players
-   SET total_wins = total_wins + 1
-   WHERE player_id = NEW.winner_id;
-END;
+
