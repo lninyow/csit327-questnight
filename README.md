@@ -44,10 +44,12 @@ MYSQL_PASSWORD=
 MYSQL_DB=questnight
 MYSQL_CURSORCLASS=DictCursor
 MYSQL_AUTOCOMMIT=true
+
+PORT = 5000
 ```
 
 ### Running the Flask app
 
 ```sh
-flask --app main run --debug
+python main.py
 ```
