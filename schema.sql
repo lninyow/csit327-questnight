@@ -163,8 +163,12 @@ SET NEW.added_date = CURRENT_DATE;
 CREATE VIEW event_details AS
 SELECT 
     e.event_id,
+    e.start_date,
+    e.end_date,
+    g.game_id AS game_id,
     g.title AS game_title,
-    p.name AS winner_name
+    p.name AS winner_name,
+    p.player_id AS winner_id
 FROM 
     events e
 JOIN 
@@ -181,15 +185,3 @@ FROM
     event_participants ep
 JOIN 
     players p ON ep.player_id = p.player_id;
-
-SELECT 
-    ed.event_id,
-    ed.game_title,
-    ed.winner_name,
-    ep.participant_name
-FROM 
-    event_details ed
-JOIN 
-    event_participants_view ep ON ed.event_id = ep.event_id;
-
-
