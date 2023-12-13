@@ -1,7 +1,6 @@
 CREATE TABLE games (
     game_id INT  AUTO_INCREMENT PRIMARY KEY,
     title VARCHAR(255) NOT NULL,
-    coverUrl VARCHAR(255),
     description VARCHAR(255)
 );
 
@@ -60,19 +59,19 @@ $$
 
 
 -- Game Procedures
-CREATE PROCEDURE create_game(IN p_title VARCHAR(255), IN p_cover_url VARCHAR(255), IN p_description VARCHAR(255))
+CREATE PROCEDURE create_game(IN p_title VARCHAR(255), IN p_description VARCHAR(255))
 BEGIN
-    INSERT INTO games(title, coverUrl, description)
-    VALUES (p_title, p_cover_url, p_description);
+    INSERT INTO games(title, description)
+    VALUES (p_title, p_description);
     SELECT LAST_INSERT_ID() AS game_id;
 END
 $$
 
 
-CREATE PROCEDURE update_game(IN p_game_id INT, IN p_title VARCHAR(255), IN p_cover_url VARCHAR(255), IN p_description VARCHAR(255))
+CREATE PROCEDURE update_game(IN p_game_id INT, IN p_title VARCHAR(255), IN p_description VARCHAR(255))
 BEGIN
     UPDATE games
-    SET title = p_title, coverUrl = p_cover_url, description = p_description
+    SET title = p_title, description = p_description
     WHERE game_id = p_game_id;
     SELECT p_game_id AS game_id;
 END
@@ -177,6 +176,7 @@ CREATE VIEW event_participants_view AS
 SELECT 
     ep.event_id,
     p.name AS participant_name
+    p.player_id AS participant_id
 FROM 
     event_participants ep
 JOIN 

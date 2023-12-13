@@ -35,7 +35,6 @@ Content-Type: application/json
 
 {
   "title": "Chess 1",
-  "coverUrl": "chess_cover.jpg",
   "description": "A classic strategy game."
 }
 
@@ -51,7 +50,6 @@ Content-Type: application/json
 
 {
   "title": "Chess",
-  "coverUrl": "new_chess_cover.jpg",
   "description": "A classic strategy game."
 }
 
