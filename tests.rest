@@ -91,3 +91,22 @@ Content-Type: application/json
 
 ### Delete an event
 DELETE {{host}}/events/1
+
+### Add a participant to an event
+POST {{host}}/events/1/join
+Content-Type: application/json
+
+{
+  "player_id": 3
+}
+
+### Read event participants
+GET {{host}}/events/1/participants
+
+### Remove a participant from an event
+POST {{host}}/events/1/leave
+Content-Type: application/json
+
+{
+  "player_id": 3
+}

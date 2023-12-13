@@ -1,18 +1,18 @@
 CREATE TABLE games (
-    game_id INT PRIMARY KEY,
+    game_id INT  AUTO_INCREMENT PRIMARY KEY,
     title VARCHAR(255) NOT NULL,
     coverUrl VARCHAR(255),
     description VARCHAR(255)
 );
 
 CREATE TABLE players (
-    player_id INT PRIMARY KEY,
+    player_id INT  AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     total_wins INT
 );
 
 CREATE TABLE events (
-    event_id INT PRIMARY KEY,
+    event_id INT  AUTO_INCREMENT PRIMARY KEY,
     start_date DATE NOT NULL,
     end_date DATE,
     game_id INT,
@@ -22,7 +22,7 @@ CREATE TABLE events (
 );
 
 CREATE TABLE event_participants (
-    event_participant_id INT PRIMARY KEY,
+    event_participant_id INT  AUTO_INCREMENT PRIMARY KEY,
     added_date DATE,
     event_id INT,
     player_id INT,
@@ -41,13 +41,23 @@ $$
 
 
 CREATE TRIGGER update_winner_wins
-AFTER UPDATE OF winner_id ON events
+AFTER UPDATE ON events
 FOR EACH ROW
 BEGIN
-   UPDATE players
-   SET total_wins = total_wins + 1
-   WHERE player_id = NEW.winner_id;
+   IF NEW.winner_id IS NOT NULL AND OLD.winner_id IS NULL THEN
+      UPDATE players
+      SET total_wins = total_wins + 1
+      WHERE player_id = NEW.winner_id;
+   END IF;
 END
+$$
+
+
+CREATE PROCEDURE remove_participant_from_event(IN eventid INT, IN playerid INT)
+BEGIN
+   DELETE FROM event_participants 
+   WHERE event_id = eventid AND player_id = playerid;
+END 
 $$
 
 

@@ -1,5 +1,6 @@
 from flask import Blueprint, jsonify, request
-from db.events import create_event, get_events, get_event, update_event, delete_event
+from db.events import create_event, get_events, get_event, update_event, delete_event, \
+    add_participant_to_event, remove_participant_from_event
 
 events = Blueprint("events", __name__)
 
@@ -49,3 +50,25 @@ def handle_delete_event(id):
     event_id = delete_event(id)
     # return the id of the deleted event in a json response
     return jsonify({"event_id": event_id})
+
+@events.post("/<int:event_id>/join")
+def handle_join_event(event_id):
+    body = request.json
+    player_id = body.get("player_id")
+
+    if player_id is not None:
+        participant_id = add_participant_to_event(event_id, player_id)
+        return jsonify({"event_participant_id": participant_id})
+    else:
+        return jsonify({"error": "player_id is required"}), 400
+
+@events.post("/<int:event_id>/leave")
+def handle_leave_event(event_id):
+    body = request.json
+    player_id = body.get("player_id")
+
+    if player_id is not None:
+        participant_id = remove_participant_from_event(event_id, player_id)
+        return jsonify({"event_participant_id": participant_id})
+    else:
+        return jsonify({"error": "player_id is required"}), 400

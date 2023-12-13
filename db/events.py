@@ -33,3 +33,16 @@ def delete_event(event_id):
     params = (event_id,)
     result = fetchone(query, params)
     return result["event_id"]
+
+
+def add_participant_to_event(event_id, player_id):
+    query = "CALL add_participant_to_event(%s, %s)"
+    params = (event_id, player_id)
+    result = fetchone(query, params)
+    return result["event_participant_id"]
+
+def remove_participant_from_event(event_id, player_id):
+    query = "CALL remove_participant_from_event(%s, %s)"
+    params = (event_id, player_id)
+    result = fetchone(query, params)
+    return result["event_participant_id"]
