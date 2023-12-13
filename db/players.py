@@ -1,8 +1,8 @@
 from db.database import fetchone, fetchall
 
-def create_player(name):
-    query = "CALL create_player(%s)"
-    params = (name,)
+def create_player(name, gender):
+    query = "CALL create_player(%s,%s)"
+    params = (name,gender)
     result = fetchone(query, params)
     return result["player_id"]
 
@@ -17,9 +17,9 @@ def get_player(player_id):
     result = fetchone(query, params)
     return result
 
-def update_player(player_id, name, total_wins):
-    query = "CALL update_player(%s, %s, %s)"
-    params = (player_id, name, total_wins)
+def update_player(player_id, name, gender, total_wins):
+    query = "CALL update_player(%s, %s, %s, %s)"
+    params = (player_id, name, gender, total_wins)
     result = fetchone(query, params)
     return result["player_id"]
 

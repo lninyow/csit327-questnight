@@ -17,15 +17,17 @@ def handle_get_player(id):
 def handle_create_player():
     body = request.json
     name = body["name"]
-    player_id = create_player(name)
+    gender = body["gender"]
+    player_id = create_player(name, gender)
     return jsonify({"player_id": player_id})
 
 @players.put("/<int:id>")
 def handle_update_player(id):
     body = request.json
     name = body["name"]
+    gender = body["gender"]
     total_wins = body["total_wins"]
-    player_id = update_player(id, name, total_wins)
+    player_id = update_player(id, name, gender, total_wins)
     return jsonify({"player_id": player_id})
 
 @players.delete("/<int:id>")

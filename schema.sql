@@ -7,6 +7,7 @@ CREATE TABLE games (
 CREATE TABLE players (
     player_id INT  AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
+    gender VARCHAR(10),
     total_wins INT
 );
 
@@ -31,19 +32,19 @@ CREATE TABLE event_participants (
 
 DELIMITER $$
 -- Player Procedures
-CREATE PROCEDURE create_player(IN p_name VARCHAR(255))
+CREATE PROCEDURE create_player(IN p_name VARCHAR(255), IN p_gender VARCHAR(10))
 BEGIN
-    INSERT INTO players(name, total_wins) 
-    VALUES (p_name, 0);
+    INSERT INTO players(name, gender, total_wins) 
+    VALUES (p_name, p_gender, 0 );
     SELECT LAST_INSERT_ID() AS player_id;
 END
 $$
 
 
-CREATE PROCEDURE update_player(IN p_player_id INT, IN p_name VARCHAR(255), IN p_total_wins INT)
+CREATE PROCEDURE update_player(IN p_player_id INT, IN p_gender VARCHAR(10), IN p_name VARCHAR(255), IN p_total_wins INT)
 BEGIN
     UPDATE players
-    SET name = p_name, total_wins = p_total_wins
+    SET name = p_name, gender = p_gender, total_wins = p_total_wins
     WHERE player_id = p_player_id;
     SELECT p_player_id AS player_id;
 END

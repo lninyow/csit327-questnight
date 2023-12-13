@@ -6,6 +6,7 @@ POST {{host}}/players
 Content-Type: application/json
 
 {
+  "gender": "male",
   "name": "John Doe"
 }
 
@@ -20,6 +21,7 @@ PUT {{host}}/players/1
 Content-Type: application/json
 
 {
+  "gender": "female",
   "name": "Liden Nino Hoe",
   "total_wins": 1
 }
