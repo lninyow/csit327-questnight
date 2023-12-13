@@ -131,16 +131,6 @@ BEGIN
 END
 $$
 
-
-CREATE PROCEDURE add_game_to_event(IN event_id INT, IN game_id INT)
-BEGIN
-   UPDATE events
-   SET game_id = game_id
-   WHERE event_id = event_id;
-END
-$$
-
-
 CREATE TRIGGER update_winner_wins
 AFTER UPDATE ON events
 FOR EACH ROW
