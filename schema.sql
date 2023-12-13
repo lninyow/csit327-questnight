@@ -16,8 +16,8 @@ CREATE TABLE events (
     end_date DATE,
     game_id INT,
     winner_id INT,
-    FOREIGN KEY (game_id) REFERENCES games(game_id),
-    FOREIGN KEY (winner_id) REFERENCES players(player_id)
+    FOREIGN KEY (game_id) REFERENCES games(game_id) ON DELETE CASCADE,
+    FOREIGN KEY (winner_id) REFERENCES players(player_id) ON DELETE SET NULL
 );
 
 CREATE TABLE event_participants (
@@ -25,8 +25,8 @@ CREATE TABLE event_participants (
     added_date DATE,
     event_id INT,
     player_id INT,
-    FOREIGN KEY (event_id) REFERENCES events(event_id),
-    FOREIGN KEY (player_id) REFERENCES players(player_id)
+    FOREIGN KEY (event_id) REFERENCES events(event_id) ON DELETE CASCADE,
+    FOREIGN KEY (player_id) REFERENCES players(player_id) ON DELETE CASCADE
 );
 
 DELIMITER $$
@@ -179,7 +179,7 @@ LEFT JOIN
 CREATE VIEW event_participants_view AS
 SELECT 
     ep.event_id,
-    p.name AS participant_name
+    p.name AS participant_name,
     p.player_id AS participant_id
 FROM 
     event_participants ep
