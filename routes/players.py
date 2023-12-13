@@ -1,4 +1,4 @@
-from flask import Blueprint,jsonify,request
+from flask import Blueprint, jsonify, request
 from db.players import create_player, get_player, get_players, update_player, delete_player
 
 players = Blueprint("players", __name__)
@@ -17,8 +17,7 @@ def handle_get_player(id):
 def handle_create_player():
     body = request.json
     name = body["name"]
-    total_wins = body["total_wins"]
-    player_id = create_player(name, total_wins)
+    player_id = create_player(name)
     return jsonify({"player_id": player_id})
 
 @players.put("/<int:id>")

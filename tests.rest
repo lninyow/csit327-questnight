@@ -6,8 +6,7 @@ POST {{host}}/players
 Content-Type: application/json
 
 {
-  "name": "John Doe",
-  "total_wins": 3
+  "name": "John Doe"
 }
 
 ### Read all players
@@ -21,12 +20,12 @@ PUT {{host}}/players/1
 Content-Type: application/json
 
 {
-  "name": "John Doe",
+  "name": "Liden Nino Hoe",
   "total_wins": 4
 }
 
 ### Delete a player
-DELETE {{host}}/players/1
+DELETE {{host}}/players/4
 
 
 # GAMES TABLE
@@ -35,7 +34,7 @@ POST {{host}}/games
 Content-Type: application/json
 
 {
-  "title": "Chess",
+  "title": "Chess 1",
   "coverUrl": "chess_cover.jpg",
   "description": "A classic strategy game."
 }
@@ -68,8 +67,7 @@ Content-Type: application/json
 {
   "start_date": "2023-01-01",
   "end_date": "2023-01-05",
-  "game_id": 1,
-  "winner_id": 1
+  "game_id": 3
 }
 
 ### Read all events
@@ -79,7 +77,7 @@ GET {{host}}/events
 GET {{host}}/events/1
 
 ### Update an event
-PUT {{host}}/events/1
+PUT {{host}}/events/2
 Content-Type: application/json
 
 {
@@ -93,7 +91,7 @@ Content-Type: application/json
 DELETE {{host}}/events/1
 
 ### Add a participant to an event
-POST {{host}}/events/1/join
+POST {{host}}/events/2/join
 Content-Type: application/json
 
 {
@@ -101,7 +99,7 @@ Content-Type: application/json
 }
 
 ### Read event participants
-GET {{host}}/events/1/participants
+# GET {{host}}/events/1/participants # TODO
 
 ### Remove a participant from an event
 POST {{host}}/events/1/leave

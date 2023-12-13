@@ -1,6 +1,14 @@
 from flask import Blueprint, jsonify, request
-from db.events import create_event, get_events, get_event, update_event, delete_event, \
-    add_participant_to_event, remove_participant_from_event
+from db.events import (
+    create_event,
+    get_events,
+    get_event,
+    update_event,
+    delete_event,
+    add_participant_to_event,
+    remove_participant_from_event,
+    get_event_participants,
+)
 
 events = Blueprint("events", __name__)
 
@@ -24,9 +32,8 @@ def handle_create_event():
     start_date = body["start_date"]
     end_date = body["end_date"]
     game_id = body["game_id"]
-    winner_id = body["winner_id"]
 
-    event_id = create_event(start_date, end_date, game_id, winner_id)
+    event_id = create_event(start_date, end_date, game_id)
     # return the id of the newly created event in a json response
     return jsonify({"event_id": event_id})
 
@@ -72,3 +79,8 @@ def handle_leave_event(event_id):
         return jsonify({"event_participant_id": participant_id})
     else:
         return jsonify({"error": "player_id is required"}), 400
+
+@events.get("/<int:event_id>/participants")
+def handle_get_event_participants(event_id):
+    participants = get_event_participants(event_id)
+    return jsonify(participants)

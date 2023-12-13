@@ -1,18 +1,15 @@
 from db.database import fetchone, fetchall
 
-
-def create_event(start_date, end_date, game_id, winner_id):
-    query = "INSERT INTO events (start_date, end_date, game_id, winner_id) VALUES (%s, %s, %s, %s)"
-    params = (start_date, end_date, game_id, winner_id)
+def create_event(start_date, end_date, game_id):
+    query = "CALL create_event(%s, %s, %s)"
+    params = (start_date, end_date, game_id)
     result = fetchone(query, params)
     return result["event_id"]
-
 
 def get_events():
     query = "SELECT * FROM events"
     result = fetchall(query)
     return result
-
 
 def get_event(event_id):
     query = "SELECT * FROM events WHERE event_id = %s"
@@ -20,29 +17,32 @@ def get_event(event_id):
     result = fetchone(query, params)
     return result
 
-
 def update_event(event_id, start_date, end_date, game_id, winner_id):
-    query = "UPDATE events SET start_date = %s, end_date = %s, game_id = %s, winner_id = %s WHERE event_id = %s"
-    params = (start_date, end_date, game_id, winner_id, event_id)
+    query = "CALL update_event(%s, %s, %s, %s, %s)"
+    params = (event_id, start_date, end_date, game_id, winner_id)
     result = fetchone(query, params)
     return result["event_id"]
 
-
 def delete_event(event_id):
-    query = "DELETE FROM events WHERE event_id = %s"
+    query = "CALL delete_event(%s)"
     params = (event_id,)
     result = fetchone(query, params)
     return result["event_id"]
-
 
 def add_participant_to_event(event_id, player_id):
     query = "CALL add_participant_to_event(%s, %s)"
     params = (event_id, player_id)
     result = fetchone(query, params)
-    return result["event_participant_id"]
+    return result
 
 def remove_participant_from_event(event_id, player_id):
     query = "CALL remove_participant_from_event(%s, %s)"
     params = (event_id, player_id)
     result = fetchone(query, params)
-    return result["event_participant_id"]
+    return result
+
+def get_event_participants(event_id):
+    query = "SELECT * FROM participants WHERE event_id = %s"
+    params = (event_id,)
+    result = fetchall(query, params)
+    return result

@@ -18,7 +18,7 @@ def handle_get_game(id):
 @games.post("/")
 def handle_create_game():
     body = request.json
-    title = body["name"]
+    title = body["title"]
     cover_url = body["coverUrl"]
     description = body["description"]
     game_id = create_game(title, cover_url, description)
@@ -27,7 +27,7 @@ def handle_create_game():
 @games.put("/<int:id>")
 def handle_update_game(id):
     body = request.json
-    title = body["name"]
+    title = body["title"]
     cover_url = body["coverUrl"]
     description = body["description"]
     game_id = update_game(id, title, cover_url, description)

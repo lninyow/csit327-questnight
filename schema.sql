@@ -31,6 +31,108 @@ CREATE TABLE event_participants (
 );
 
 DELIMITER $$
+-- Player Procedures
+CREATE PROCEDURE create_player(IN p_name VARCHAR(255))
+BEGIN
+    INSERT INTO players(name, total_wins) 
+    VALUES (p_name, 0);
+    SELECT LAST_INSERT_ID() AS player_id;
+END
+$$
+
+
+CREATE PROCEDURE update_player(IN p_player_id INT, IN p_name VARCHAR(255), IN p_total_wins INT)
+BEGIN
+    UPDATE players
+    SET name = p_name, total_wins = p_total_wins
+    WHERE player_id = p_player_id;
+    SELECT p_player_id AS player_id;
+END
+$$
+
+
+CREATE PROCEDURE delete_player(IN p_player_id INT)
+BEGIN
+    DELETE FROM players WHERE player_id = p_player_id;
+    SELECT p_player_id AS player_id;
+END
+$$
+
+
+-- Game Procedures
+CREATE PROCEDURE create_game(IN p_title VARCHAR(255), IN p_cover_url VARCHAR(255), IN p_description VARCHAR(255))
+BEGIN
+    INSERT INTO games(title, coverUrl, description)
+    VALUES (p_title, p_cover_url, p_description);
+    SELECT LAST_INSERT_ID() AS game_id;
+END
+$$
+
+
+CREATE PROCEDURE update_game(IN p_game_id INT, IN p_title VARCHAR(255), IN p_cover_url VARCHAR(255), IN p_description VARCHAR(255))
+BEGIN
+    UPDATE games
+    SET title = p_title, coverUrl = p_cover_url, description = p_description
+    WHERE game_id = p_game_id;
+    SELECT p_game_id AS game_id;
+END
+$$
+
+
+CREATE PROCEDURE delete_game(IN p_game_id INT)
+BEGIN
+    DELETE FROM games WHERE game_id = p_game_id;
+    SELECT p_game_id AS game_id;
+END
+$$
+
+
+-- Event Procedures
+CREATE PROCEDURE create_event(IN p_start_date DATE, IN p_end_date DATE, IN p_game_id INT)
+BEGIN
+    INSERT INTO events(start_date, end_date, game_id)
+    VALUES (p_start_date, p_end_date, p_game_id);
+    SELECT LAST_INSERT_ID() AS event_id;
+END
+$$
+
+
+CREATE PROCEDURE update_event(IN p_event_id INT, IN p_start_date DATE, IN p_end_date DATE, IN p_game_id INT, IN p_winner_id INT)
+BEGIN
+    UPDATE events
+    SET start_date = p_start_date, end_date = p_end_date, game_id = p_game_id, winner_id = p_winner_id
+    WHERE event_id = p_event_id;
+    SELECT p_event_id AS event_id;
+END
+$$
+
+
+CREATE PROCEDURE delete_event(IN p_event_id INT)
+BEGIN
+    DELETE FROM events WHERE event_id = p_event_id;
+    SELECT p_event_id AS event_id;
+END
+$$
+
+
+CREATE PROCEDURE add_participant_to_event(IN p_event_id INT, IN p_player_id INT)
+BEGIN
+    INSERT INTO event_participants(event_id, player_id)
+    VALUES (p_event_id, p_player_id);
+    SELECT LAST_INSERT_ID() AS event_participant_id;
+END
+$$
+
+
+CREATE PROCEDURE remove_participant_from_event(IN p_event_id INT, IN p_player_id INT)
+BEGIN
+    DELETE FROM event_participants 
+    WHERE event_id = p_event_id AND player_id = p_player_id;
+    SELECT p_event_id AS event_id;
+END
+$$
+
+
 CREATE PROCEDURE add_game_to_event(IN event_id INT, IN game_id INT)
 BEGIN
    UPDATE events
@@ -49,22 +151,6 @@ BEGIN
       SET total_wins = total_wins + 1
       WHERE player_id = NEW.winner_id;
    END IF;
-END
-$$
-
-
-CREATE PROCEDURE remove_participant_from_event(IN eventid INT, IN playerid INT)
-BEGIN
-   DELETE FROM event_participants 
-   WHERE event_id = eventid AND player_id = playerid;
-END 
-$$
-
-
-CREATE PROCEDURE add_participant_to_event(IN event_id INT, IN player_id INT)
-BEGIN
-   INSERT INTO event_participants(event_id, player_id)
-   VALUES (event_id, player_id);
 END
 $$
 
