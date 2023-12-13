@@ -21,11 +21,11 @@ Content-Type: application/json
 
 {
   "name": "Liden Nino Hoe",
-  "total_wins": 4
+  "total_wins": 1
 }
 
 ### Delete a player
-DELETE {{host}}/players/4
+DELETE {{host}}/players/1
 
 
 # GAMES TABLE
@@ -65,7 +65,7 @@ Content-Type: application/json
 {
   "start_date": "2023-01-01",
   "end_date": "2023-01-05",
-  "game_id": 3
+  "game_id": 1
 }
 
 ### Read all events
@@ -75,34 +75,34 @@ GET {{host}}/events
 GET {{host}}/events/1
 
 ### Update an event
-PUT {{host}}/events/2
+PUT {{host}}/events/1
 Content-Type: application/json
 
 {
   "start_date": "2023-01-01",
   "end_date": "2023-01-10",
   "game_id": 1,
-  "winner_id": 2
+  "winner_id": 1
 }
 
 ### Delete an event
 DELETE {{host}}/events/1
 
 ### Add a participant to an event
-POST {{host}}/events/2/join
+POST {{host}}/events/1/join
 Content-Type: application/json
 
 {
-  "player_id": 3
+  "player_id": 1
 }
 
 ### Read event participants
-# GET {{host}}/events/1/participants # TODO
+GET {{host}}/events/1/participants
 
 ### Remove a participant from an event
 POST {{host}}/events/1/leave
 Content-Type: application/json
 
 {
-  "player_id": 3
+  "player_id": 1
 }
