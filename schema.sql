@@ -8,7 +8,7 @@ CREATE TABLE players (
     player_id INT  AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     gender VARCHAR(10),
-    total_wins INT
+    total_wins INT DEFAULT 0
 );
 
 CREATE TABLE events (
