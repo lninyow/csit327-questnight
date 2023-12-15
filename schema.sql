@@ -41,7 +41,7 @@ END
 $$
 
 
-CREATE PROCEDURE update_player(IN p_player_id INT, IN p_gender VARCHAR(10), IN p_name VARCHAR(255), IN p_total_wins INT)
+CREATE PROCEDURE update_player(IN p_player_id INT, IN p_name VARCHAR(255), IN p_gender VARCHAR(10), IN p_total_wins INT)
 BEGIN
     UPDATE players
     SET name = p_name, gender = p_gender, total_wins = p_total_wins

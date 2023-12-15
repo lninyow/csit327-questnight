@@ -23,7 +23,7 @@ def get_player(player_id):
 
 def update_player(player_id, name, gender, total_wins):
     query = "CALL update_player(%s, %s, %s, %s)"
-    params = (player_id, gender, name, total_wins)
+    params = (player_id, name, gender, total_wins)
     result = fetchone(query, params)
     return result["player_id"]
 

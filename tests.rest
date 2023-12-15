@@ -6,8 +6,8 @@ POST {{host}}/players
 Content-Type: application/json
 
 {
-  "gender": "male",
-  "name": "John Doe"
+  "name": "Jane Doe",
+  "gender": "female"
 }
 
 ### Read all players
