@@ -1,5 +1,6 @@
 import os
 from flask import Flask
+from flask_cors import CORS
 from flask_mysqldb import MySQL
 from db.database import set_mysql
 from dotenv import load_dotenv
@@ -11,6 +12,8 @@ from routes.players import players
 
 # create the flask app
 app = Flask(__name__)
+# enable CORS
+CORS(app)
 
 # configure flask-mysql from environment variables (.env file)
 load_dotenv()
