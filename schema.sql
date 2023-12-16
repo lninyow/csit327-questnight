@@ -170,6 +170,7 @@ LEFT JOIN
 CREATE VIEW event_participants_view AS
 SELECT 
     ep.event_id,
+    ep.event_participant_id,
     p.name AS participant_name,
     p.player_id AS participant_id
 FROM 
