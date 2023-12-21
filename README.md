@@ -40,6 +40,6 @@ Members:
 
 ### Running the Flask app
 
-    ```sh
-    python main.py
-    ```
+```sh
+python main.py
+```
