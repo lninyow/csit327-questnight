@@ -1,10 +1,12 @@
 # QuestNight API
 
-Members:
+CSIT327-G1 Final Project
 
-- Baclayon, Leonel - [carefreebee](https://github.com/carefreebee)
-- Sagmon, Liden - [lninyow](https://github.com/lninyow)
-- Tampus, Nathaniel - [dotnize](https://github.com/dotnize)
+#### Members:
+
+- Baclayon, Leonel Christie - [carefreebee](https://github.com/carefreebee)
+- Sagmon, Liden Niño - [lninyow](https://github.com/lninyow)
+- Tampus, Nathaniel John - [dotnize](https://github.com/dotnize)
 
 ## Setup
 
